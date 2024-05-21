@@ -1,0 +1,6 @@
+
+/app/.idea
+app/server/package-lock.json
+app/server/package.json
+app/client/package-lock.json
+app/client/package.json
