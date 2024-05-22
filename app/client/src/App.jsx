@@ -75,6 +75,7 @@ export default function App() {
                     const locallySavedCars = await db.getAllLocallySavedCars();
                     console.log(locallySavedCars);
                     setCars(locallySavedCars);
+                    alert("[!] Server is down.");
                 }
             }
         }

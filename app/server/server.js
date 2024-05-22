@@ -27,7 +27,7 @@ socket.on("connection", (client) => {
     console.log(`[+] Client connected with id: ${client.id}`);
 
     const job = new CronJob("*/10 * * * * *", () => {
-        const car = {brand: "BMW", model: "M4 F82", year: 2020, fuel: "petrol", gearbox: "automatic", price: 45000, image: ""};
+        const car = {brand: "BMW", model: "M4 F82", year: 2020, fuel: "petrol", gearbox: "automatic", price: 45000, image: "https://s3mag.com/wp-content/uploads/2022/10/new-BMW-M2-5-1280x640.jpg"};
         client.emit("receive-car", car);
     });
 
