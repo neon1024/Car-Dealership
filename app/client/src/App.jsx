@@ -14,6 +14,8 @@ import CarAddForm from './components/CarAddForm';
 import CarEditForm from './components/CarEditForm';
 import carService from "./utils/carService.js";
 
+import { io } from "socket.io-client";
+
 export default function App() {
     const [cars, setCars] = useState([]);
     const [backendDown, setBackendDown] = useState(true);
@@ -27,6 +29,23 @@ export default function App() {
 
     //const [currentUser, setCurrentUser] = useState(null);
 
+    useEffect(() => {
+        const socket = io("http://localhost:3000");
+
+        socket.on("receive-message-from-server", (message) => {
+            console.log(message);
+        })
+
+        socket.on("receive-car", async (car) => {
+            console.log(car);
+            await addCar(car);
+        })
+    }, []);
+
+    window.addEventListener("storage", () => {
+            window.location.reload();
+    });
+
     const handleScroll = () => {
         const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
@@ -35,10 +54,6 @@ export default function App() {
             setCurrentPage(currentPage + 1);
         }
     }
-
-    window.addEventListener("storage", () => {
-            window.location.reload();
-    });
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);

@@ -11,6 +11,29 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const carRoutes = require('./routes/carRoutes.js');
 
+const CronJob = require("cron").CronJob;
+
+PORT = 3000;
+origins = ["http://localhost:8080", "http://localhost:8800", "http://localhost:5173"];
+
+const socket = require("socket.io")(PORT, {
+    cors: {
+        origin:
+            origins
+    }
+});
+
+socket.on("connection", (client) => {
+    console.log(`[+] Client connected with id: ${client.id}`);
+
+    const job = new CronJob("*/10 * * * * *", () => {
+        const car = {brand: "BMW", model: "M4 F82", year: 2020, fuel: "petrol", gearbox: "automatic", price: 45000, image: ""};
+        client.emit("receive-car", car);
+    });
+
+    job.start();
+})
+
 const dbUrl = 'mongodb://127.0.0.1:27017/cars';
 const dbTestUrl = 'mongodb://127.0.0.1:27017/cars-test';
 

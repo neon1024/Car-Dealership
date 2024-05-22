@@ -9,7 +9,6 @@ const CarSchema = new Schema({
     gearbox: String,
     price: Number,
     image: String,
-    saved: Boolean
 });
 
 module.exports = mongoose.model('Car', CarSchema);
